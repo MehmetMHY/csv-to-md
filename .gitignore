@@ -127,3 +127,26 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Excel Files
+.xlsx
+.xlsm
+.xlsb
+.xltx
+.xltm
+.xls
+.xlt
+.xml
+.xml
+.xlam
+.xia
+.xlw
+.xir
+.xlr
+
+# MacOS files
+.DS_Store
+
+# All CSV files
+.csv
+
