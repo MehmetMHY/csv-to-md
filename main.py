@@ -1,13 +1,15 @@
-# Title:    Convert CSV File To MD File
-# By:       Mehmet Yilmaz
-# Date:     12-8-2021
-# Sources:
-#   1) https://thispointer.com/python-read-csv-into-a-list-of-lists-or-tuples-or-dictionaries-import-csv-to-list/
-#   2) https://stackoverflow.com/questions/33686747/save-a-list-to-a-txt-file
-# Format:
-#   python3 csv_to_md.py example.csv
-#     |             \              \
-#   [run python]  [script name]  [csv file to convert]
+"""
+Title:    Convert CSV File To MD File
+By:       Mehmet Yilmaz
+Date:     12-8-2021
+Sources:
+  1) https://thispointer.com/python-read-csv-into-a-list-of-lists-or-tuples-or-dictionaries-import-csv-to-list/
+  2) https://stackoverflow.com/questions/33686747/save-a-list-to-a-txt-file
+Format:
+  python3 csv_to_md.py example.csv
+    |             \              \
+  [run python]  [script name]  [csv file to convert]
+"""
 
 from csv import reader
 import os.path
@@ -45,21 +47,20 @@ def largest_strings(data):
 def space_character(str_input, ideal_size):
     str_input_len = len(str_input)
     if(str_input_len > ideal_size):
-        print("-ERROR: Invalid, string is bigger then ideal string size (max size)")
-        print("-Values: ")
-        print("   -inputed string: " + str(str_input))
-        print("   -ideal_max_size: " + str(ideal_size) + "\n")
+        lines = [
+            "csv_to_md() ERROR -> Invalid, string is bigger then ideal string size (max size)",
+            "   -inputed string: " + str(str_input),
+            "   -ideal_max_size: " + str(ideal_size) + "\n"
+        ]
+        print_list(lines)
         return
     else:
         diff = ideal_size - len(str(str_input))
-
-        for i in range(diff):
+        for _ in range(diff):
             str_input = str_input + " "
         return str_input
 
-# TODO: clean up code, its a bit messy
-
-def main(input_csv_filename):
+def csv_to_md(input_csv_filename):
     # load csv file into a list of lists
     csv_data = csv_to_lists(input_csv_filename)
 
@@ -100,12 +101,12 @@ def main(input_csv_filename):
         csv_converted_to_md.append(row_md)
 
     # save converted csv to a md file
-    output_filename = input_csv_filename.split(".")[0] + ".md" # "converted_csv.md"
+    output_filename = input_csv_filename.split(".")[0] + ".md"
     with open(output_filename, 'w') as output:
         for row in csv_converted_to_md:
             output.write(str(row) + '\n')
 
-    print("Converted csv to md file. File: " + str(output_filename))
+    return output_filename
 
 # main calls, with input validation
 if __name__ == "__main__":
@@ -119,16 +120,16 @@ if __name__ == "__main__":
             if(os.path.isfile(usr_csv)):
                 md_name = usr_csv.split(".")[0] + ".md"
                 if(os.path.isfile(md_name) == False):
-                    main(usr_csv)
+                    output = csv_to_md(usr_csv)
+                    print("csv_to_md() -> Converted csv to md file" + " [ " + str(output) + " ]")
                 else:
-                    print("-ERROR: The md name for your inputted csv file already exists = " + str(usr_csv) + " -> " + str(md_name))
+                    print("csv_to_md() ERROR -> The md name for your inputted csv file already exists = " + str(usr_csv) + " -> " + str(md_name))
             else:
-                print("-ERROR: Inputted file does not exist!")
+                print("csv_to_md() ERROR -> Inputted file does not exist!")
                 
         else:
-            print("-ERROR: Invalid arugments")
-            print("-Valid Format: python3 csv_to_md.py example.csv")
+            print("csv_to_md() ERROR -> Invalid arugments, your execution should look like this: python3 csv_to_md.py example.csv")
     
     except:
-        print("-ERROR: Unknown error occurred!")
+        print("csv_to_md() ERROR -> Unknown error occurred!")
 
