@@ -150,3 +150,7 @@ dmypy.json
 # All CSV files
 .csv
 
+# Markdown files
+.md
+!README.md
+
